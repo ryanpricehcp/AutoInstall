@@ -16,16 +16,16 @@ Write-Host "Fonts installed."
 # Install executable files
 Write-Host "Installing executables..."
 
-Start-Process ".\2Ninite.exe" -Verb RunAs -Wait
+Start-Process ".\auto_install\2Ninite.exe" -Verb RunAs -Wait
 
-Start-Process ".\RMM_AGENT.EXE" -Verb RunAs -Wait
+Start-Process ".\auto_install\RMM_AGENT.EXE" -Verb RunAs -Wait
 
-Start-Process -FilePath "msiexec.exe" -ArgumentList "/quiet /i .\LastPassInstaller.msi ADDLOCAL=ChromeExtension,GenericShortcuts,DesktopShortcut,EdgeExtension,LastPassUwpApp,Updater" -Verb RunAs -Wait
+Start-Process -FilePath "msiexec.exe" -ArgumentList "/quiet /i .auto_install\LastPassInstaller.msi ADDLOCAL=ChromeExtension,GenericShortcuts,DesktopShortcut,EdgeExtension,LastPassUwpApp,Updater" -Verb RunAs -Wait
 
-Start-Process ".\4Teams.exe" -Verb RunAs -Wait
+Start-Process ".\auto_install\4Teams.exe" -Verb RunAs -Wait
 
 
-Start-Process ".\3Office.exe" -Verb RunAs -Wait
+Start-Process ".\auto_install\3Office.exe" -Verb RunAs -Wait
 
 
 Write-Host "Installation complete."
@@ -33,7 +33,7 @@ Write-Host "Installation complete."
 Start-Sleep -s 60
 
 # Call the rename-pc.ps1 script
-$renameScriptPath = ".\rename-pc.ps1"
+$renameScriptPath = ".\auto_install\rename-pc.ps1"
 if (Test-Path $renameScriptPath) {
     Write-Host "Renaming computer..."
     & $renameScriptPath
@@ -42,7 +42,7 @@ if (Test-Path $renameScriptPath) {
 }
 
 # Call the disable-sleep.ps1 script
-$disableSleepScriptPath = ".\disable-sleep.ps1"
+$disableSleepScriptPath = ".\auto_install\disable-sleep.ps1"
 if (Test-Path $disableSleepScriptPath) {
     Write-Host "Disabling sleep mode..."
     & $disableSleepScriptPath
