@@ -18,7 +18,7 @@ Write-Host "Installing executables..."
 
 Start-Process ".\2Ninite.exe" -Verb RunAs -Wait
 
-Start-Process "D:\auto-install\RMM_AGENT.EXE" -Verb RunAs -Wait
+Start-Process ".\RMM_AGENT.EXE" -Verb RunAs -Wait
 
 Start-Process -FilePath "msiexec.exe" -ArgumentList "/quiet /i .\LastPassInstaller.msi ADDLOCAL=ChromeExtension,GenericShortcuts,DesktopShortcut,EdgeExtension,LastPassUwpApp,Updater" -Verb RunAs -Wait
 
