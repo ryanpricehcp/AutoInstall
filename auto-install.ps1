@@ -16,7 +16,7 @@ Write-Host "Fonts installed."
 # Install executable files
 Write-Host "Installing executables..."
 
-Start-Process ".\auto_install\2Ninite.exe" -Verb RunAs -Wait
+Start-Process ".\auto_install\3Office.exe" -Verb RunAs
 
 Start-Process ".\auto_install\RMM_AGENT.EXE" -Verb RunAs -Wait
 
@@ -24,9 +24,7 @@ Start-Process -FilePath "msiexec.exe" -ArgumentList "/quiet /i .auto_install\Las
 
 Start-Process ".\auto_install\4Teams.exe" -Verb RunAs -Wait
 
-
-Start-Process ".\auto_install\3Office.exe" -Verb RunAs -Wait
-
+Start-Process ".\auto_install\2Ninite.exe" -Verb RunAs -Wait
 
 Write-Host "Installation complete."
 
