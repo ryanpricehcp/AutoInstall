@@ -1,8 +1,3 @@
-# Install TrueType font files
-# $font1Path = "D:\auto-install\1Archivo1.ttf"
-# $font2Path = "D:\auto-install\1Archivo2.ttf"
-# $fontsFolder = "$($env:SystemRoot)\Fonts"
-
 Write-Host "Installing fonts..."
 # Copy-Item $font1Path $fontsFolder -Force
 # Copy-Item $font2Path $fontsFolder -Force
@@ -10,7 +5,7 @@ Write-Host "Installing fonts..."
 $fonts = (New-Object -ComObject Shell.Application).Namespace(0x14)
 Get-ChildItem -Recurse -include *.ttf | ForEach-Object { $fonts.CopyHere($_.fullname) }
 
-Write-Host "Fonts installed."
+Write-Host "Fonts installed." -ForegroundColor Green
 
 
 # Install executable files
@@ -26,9 +21,9 @@ Start-Process ".\auto_install\4Teams.exe" -Verb RunAs -Wait
 
 Start-Process ".\auto_install\2Ninite.exe" -Verb RunAs -Wait
 
-Write-Host "Installation complete."
+Write-Host "Installation complete." -ForegroundColor Green
 
-Start-Sleep -s 60
+Start-Sleep -s 30
 
 # Call the rename-pc.ps1 script
 $renameScriptPath = ".\auto_install\rename-pc.ps1"
@@ -44,6 +39,27 @@ $disableSleepScriptPath = ".\auto_install\disable-sleep.ps1"
 if (Test-Path $disableSleepScriptPath) {
     Write-Host "Disabling sleep mode..."
     & $disableSleepScriptPath
+    write-host "Sleep mode disabled." -ForegroundColor Green
 } else {
     Write-Warning "The disable-sleep.ps1 script could not be found at $disableSleepScriptPath."
+}
+
+# Call the set-mtntime.ps1 script
+$setTimezoneScriptPath = ".\auto_install\set-mtntime.ps1"
+if (Test-Path $setTimezoneScriptPath) {
+    Write-Host "Setting timezone to Mountain Standard Time..."
+    & $setTimezoneScriptPath
+} else {
+    Write-Warning "The set-mtntime.ps1 script could not be found at $setTimezoneScriptPath."
+}
+
+$update = Read-Host "Would you like to install Windows updates? This will automatically reboot the computer. (Y/N)"
+Get-WindowsUpdate
+
+# Install Windows updates
+if ($update -eq "Y") {
+    Write-Host "Installing Windows updates..."
+    Install-WindowsUpdate -AcceptAll -AutoReboot
+} else {
+    Write-Host "Windows updates will not be installed."
 }

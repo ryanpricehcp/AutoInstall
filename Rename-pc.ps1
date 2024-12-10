@@ -4,7 +4,7 @@ $SerialNumber = (Get-WmiObject -class win32_bios).SerialNumber
 switch ($Manufacturer){
 "D" {
     $Model,$Size,$version = ((Get-CimInstance -ClassName Win32_ComputerSystem).Model).split(" ")
-    if($version -eq $null) {
+    if($null -eq $version) {
         $version = $size
         $size = 13
     }
@@ -28,4 +28,4 @@ Rename-Computer -NewName $NewName -Force
 Write-Host "Verification that the changes were made"
 Write-Host "Old Name: " -NoNewline
 Write-Host $(Get-CimInstance -ClassName Win32_ComputerSystem).Name
-Write-Host "New Name: $NewName"
+Write-Host "New Name: $NewName" -ForegroundColor Green
