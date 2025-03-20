@@ -5,8 +5,12 @@ switch ($Manufacturer){
 "D" {
     $Model,$Size,$version = ((Get-CimInstance -ClassName Win32_ComputerSystem).Model).split(" ")
     if($null -eq $version) {
-        $version = $size
-        $size = 13
+        $version = $Size
+        $Size = 13
+    }
+    $Model = $Model.Substring(0,3)
+    if($Model -eq "Precision" -and $Model -eq "5490") {
+        $Size = 14
     }
     $NewName = "$Manufacturer$Model$Size-$SerialNumber"
 }
