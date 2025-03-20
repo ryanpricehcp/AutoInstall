@@ -1,26 +1,38 @@
 ﻿$Manufacturer = (Get-CimInstance -ClassName Win32_ComputerSystem).Manufacturer[0]
 $SerialNumber = (Get-WmiObject -class win32_bios).SerialNumber  
 
+
 switch ($Manufacturer){
+
 "D" {
     $Model,$Size,$version = ((Get-CimInstance -ClassName Win32_ComputerSystem).Model).split(" ")
     if($null -eq $version) {
-        $version = $Size
-        $Size = 13
+        $version = $size
+        $size = 13
     }
-    $Model = $Model.Substring(0,3)
-    if($Model -eq "Precision" -and $Model -eq "5490") {
+    $Model = $Model.Substring(0,4)
+
+    if($Model -eq "Prec" -and $Size -eq "5490") {
         $Size = 14
-    }
-    $NewName = "$Manufacturer$Model$Size-$SerialNumber"
+    } elseif($Model -ne 'Opti') {
+    $NewName = "$Manufacturer$Model$Size-$SerialNumber"}
+    else {
+    $NewName = "$Manufacturer$Model-$SerialNumber"}
+    
 }
 
 "H" {
     $Man,$Model,$version,$variant = ((Get-CimInstance -ClassName Win32_ComputerSystem).Model).split(" ")
-    $NewName = "$Manufacturer$Model$variant-$SerialNumber"
+    $Model = $Model.Substring(0,4)
+    
+
+    if($Model -eq 'ProB') {$model = 'PB'}
+    $NewName = "$Manufacturer$Model-$SerialNumber"
+
 }
 "M" {
-    $NewName = $Manufacturer-$SerialNumber
+    $Model,$version,$iteration = ((Get-CimInstance -ClassName Win32_ComputerSystem).Model).split(" ")
+    $NewName = "$Manufacturer$iteration-$SerialNumber"
 
 }
 }
@@ -32,4 +44,4 @@ Rename-Computer -NewName $NewName -Force
 Write-Host "Verification that the changes were made"
 Write-Host "Old Name: " -NoNewline
 Write-Host $(Get-CimInstance -ClassName Win32_ComputerSystem).Name
-Write-Host "New Name: $NewName" -ForegroundColor Green
+Write-Host "New Name: $NewName"
