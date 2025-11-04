@@ -13,7 +13,11 @@ Write-Host "Installing executables..."
 
 Start-Process ".\auto_install\3Office.exe" -Verb RunAs
 
-Start-Sleep -s 600
+$seconds = 600
+for ($i = $seconds; $i -ge 0; $i--) {
+    Write-Progress -Activity "Waiting..." -Status "$i seconds remaining" -PercentComplete ((($seconds - $i) / $seconds) * 100)
+    Start-Sleep -Seconds 1
+}
 
 Start-Process ".\auto_install\RMM_AGENT.EXE" -Verb RunAs -Wait
 
