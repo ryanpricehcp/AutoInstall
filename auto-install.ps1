@@ -18,13 +18,14 @@ for ($i = $seconds; $i -ge 0; $i--) {
     Write-Progress -Activity "Waiting..." -Status "$i seconds remaining" -PercentComplete ((($seconds - $i) / $seconds) * 100)
     Start-Sleep -Seconds 1
 }
+Write-Progress -Activity "Waiting..." -Completed
 
 Start-Process ".\auto_install\RMM_AGENT.EXE" -Verb RunAs -Wait
 
 Start-Process -FilePath "msiexec.exe" -ArgumentList "/quiet /i .auto_install\LastPassInstaller.msi ADDLOCAL=ChromeExtension,GenericShortcuts,DesktopShortcut,EdgeExtension,LastPassUwpApp,Updater" -Verb RunAs -Wait
 
-# Start-Process ".\auto_install\4Teams.exe" -Verb RunAs -Wait
-winget install Microsoft.Teams --silent
+Start-Process ".\auto_install\4Teams.exe" -Verb RunAs -Wait
+# winget install Microsoft.Teams --silent
 
 Start-Process ".\auto_install\2Ninite.exe" -Verb RunAs -Wait
 
