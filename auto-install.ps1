@@ -66,7 +66,8 @@ if (Test-Path $setTimezoneScriptPath) {
 
 # Install Windows updates
 # if ($update -eq "Y") {
-    Install-Module -Name PSWindowsUpdate
+    Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+    Install-Module -Name PSWindowsUpdate -Repository PSGallery -Scope AllUsers -Confirm:$false -ErrorAction Stop
     Get-WindowsUpdate
     Read-Host "Press Enter to continue..."
     Write-Host "Installing Windows updates..."
