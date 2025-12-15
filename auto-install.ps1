@@ -61,16 +61,16 @@ if (Test-Path $setTimezoneScriptPath) {
     Write-Warning "The set-mtntime.ps1 script could not be found at $setTimezoneScriptPath."
 }
 
-$update = Read-Host "Would you like to install Windows updates? This will automatically reboot the computer. (Y/N)"
+# $update = Read-Host "Would you like to install Windows updates? This will automatically reboot the computer. (Y/N)"
 
 
 # Install Windows updates
-if ($update -eq "Y") {
+# if ($update -eq "Y") {
     Install-Module -Name PSWindowsUpdate
     Get-WindowsUpdate
     Read-Host "Press Enter to continue..."
     Write-Host "Installing Windows updates..."
     Install-WindowsUpdate -AcceptAll -AutoReboot
-} else {
-    Write-Host "Windows updates will not be installed."
-}
+# } else {
+#     Write-Host "Windows updates will not be installed."
+# }
