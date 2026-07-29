@@ -53,7 +53,7 @@ for ($i = $depSeconds; $i -ge 0; $i--) {
 }
 Write-Progress -Activity "Waiting for security agents..." -Completed
 
-Start-Process -FilePath "msiexec.exe" -ArgumentList "/quiet /i .auto_install\LastPassInstaller.msi ADDLOCAL=ChromeExtension,GenericShortcuts,DesktopShortcut,EdgeExtension,LastPassUwpApp,Updater" -Verb RunAs -Wait
+Start-Process -FilePath "msiexec.exe" -ArgumentList "/quiet /i .\auto_install\LastPassInstaller.msi ADDLOCAL=ChromeExtension,GenericShortcuts,DesktopShortcut,EdgeExtension,LastPassUwpApp,Updater" -Verb RunAs -Wait
 
 Start-Process ".\auto_install\4Teams.exe" -Verb RunAs -Wait
 # winget install Microsoft.Teams --silent
